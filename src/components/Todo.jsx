@@ -7,6 +7,11 @@ const Todo = () => {
     const [tasks, setTask] = useState([])
     const [isEditing, setIsEditing] = useState(false)
     const [editId, setEditId] = useState(null)
+    const [completed, setCompleted] = useState(false)
+
+    function handleComplection(idToComplete) {
+        setCompleted(!completed)
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -21,7 +26,10 @@ const Todo = () => {
             setInput("")
         }
         else {
-            if (!input.trim()) return;
+            if (!input.trim()) {
+                setInput('');
+                return;
+            }
             setTask([...tasks, { id: Date.now(), task: input }]);
             setInput('');
         }
@@ -41,12 +49,12 @@ const Todo = () => {
         })
         setInput(objectToEdit.task)
     }
+
+    
     return (
         <div className='w-full h-screen'>
             <TodoHeader input={input}
                 setInput={setInput}
-                // task={tasks}
-                // setTask={setTask}
                 handleSubmit={handleSubmit}
                 isEditing={isEditing}
             />
@@ -54,6 +62,7 @@ const Todo = () => {
                 tasks={tasks}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
+                handleComplection={handleComplection}
             />
         </div>
     )
