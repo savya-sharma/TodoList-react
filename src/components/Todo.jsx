@@ -1,0 +1,61 @@
+import { useState } from 'react'
+import TodoHeader from './TodoHeader'
+import ToList from './ToList'
+
+const Todo = () => {
+    const [input, setInput] = useState("")
+    const [tasks, setTask] = useState([])
+    const [isEditing, setIsEditing] = useState(false)
+    const [editId, setEditId] = useState(null)
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (isEditing) {
+            setTask(
+                tasks.map((obj) => {
+                    return obj.id === editId ? { ...obj, task: input } : obj
+                })
+            )
+            setIsEditing(false)
+            setEditId(null)
+            setInput("")
+        }
+        else {
+            setTask([...tasks, { id: Date.now(), task: input }]);
+            setInput('');
+        }
+    }
+
+
+    function handleDelete(obj) {
+        setTask(tasks.filter((task) => task.id !== obj))
+    }
+
+
+    function handleEdit(idToEdit) {
+        setIsEditing(true)
+        setEditId(idToEdit)
+        const objectToEdit = tasks.find((task) => {
+            return task.id === idToEdit;
+        })
+        setInput(objectToEdit.task)
+    }
+    return (
+        <div className='w-full h-screen'>
+            <TodoHeader input={input}
+                setInput={setInput}
+                // task={tasks}
+                // setTask={setTask}
+                handleSubmit={handleSubmit}
+                isEditing={isEditing}
+            />
+            <ToList
+                tasks={tasks}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+            />
+        </div>
+    )
+}
+
+export default Todo
