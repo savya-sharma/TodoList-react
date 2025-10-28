@@ -21,7 +21,7 @@ const Todo = () => {
             setInput("")
         }
         else {
-            if (input === "") return
+            if (!input.trim()) return;
             setTask([...tasks, { id: Date.now(), task: input }]);
             setInput('');
         }
