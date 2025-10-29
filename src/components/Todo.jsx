@@ -7,11 +7,6 @@ const Todo = () => {
     const [tasks, setTask] = useState([])
     const [isEditing, setIsEditing] = useState(false)
     const [editId, setEditId] = useState(null)
-    const [completed, setCompleted] = useState(false)
-
-    function handleComplection(idToComplete) {
-        setCompleted(!completed)
-    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -50,9 +45,9 @@ const Todo = () => {
         setInput(objectToEdit.task)
     }
 
-    
+
     return (
-        <div className='w-full h-screen'>
+        <div className='w-full min-h-screen bg-gray-100'>
             <TodoHeader input={input}
                 setInput={setInput}
                 handleSubmit={handleSubmit}
@@ -62,7 +57,6 @@ const Todo = () => {
                 tasks={tasks}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
-                handleComplection={handleComplection}
             />
         </div>
     )
